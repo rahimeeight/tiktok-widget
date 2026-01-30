@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Custom Draggable Panel</title>
+<style>
+  body {
+    margin: 0;
+    background: transparent;
+    font-family: Arial, sans-serif;
+    user-select: none; /* Prevent text selection while dragging */
+  }
+
+  #panel {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: grab;
+    width: 180px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .item img {
+    width: 50px;
+    height: 50px;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="panel">
+  <div class="item">
+    <img src="Rose.webp" alt="Rose">
+    <span>Thunder</span>
+  </div>
+  <div class="item">
+    <img src="Finger Heart.webp" alt="Finger Heart">
+    <span>Level Up</span>
+  </div>
+  <div class="item">
+    <img src="Sunglasses.webp" alt="Sunglasses">
+    <span>Empty Ammo</span>
+  </div>
+  <div class="item">
+    <img src="Galaxy.webp" alt="Galaxy">
+    <span>Robot</span>
+  </div>
+</div>
+
+<script>
+const panel = document.getElementById('panel');
+let isDown = false;
+let offset = [0,0];
+
+panel.addEventListener('mousedown', (e) => {
+  isDown = true;
+  offset = [
+    panel.offsetLeft - e.clientX,
+    panel.offsetTop - e.clientY
+  ];
+  panel.style.cursor = 'grabbing';
+});
+
+document.addEventListener('mouseup', () => {
+  isDown = false;
+  panel.style.cursor = 'grab';
+});
+
+document.addEventListener('mousemove', (e) => {
+  e.preventDefault();
+  if (isDown) {
+    panel.style.left = (e.clientX + offset[0]) + 'px';
+    panel.style.top = (e.clientY + offset[1]) + 'px';
+  }
+});
+</script>
+
+</body>
+</html>
